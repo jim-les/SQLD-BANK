@@ -19,7 +19,7 @@ export const AppProvider = ({ children }) => {
         setIsBankCardOpen(!isBankCardOpen);
     };
 
-    const baseUrl = 'http://localhost:5000/api';
+    const baseUrl = 'https://sqld-backend.onrender.com/api';
     const navigate = useNavigate();
 
     // useEffect to check if user is already logged in else redirect to login page
