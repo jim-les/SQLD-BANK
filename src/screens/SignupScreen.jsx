@@ -10,9 +10,9 @@ import { BadgerWidget } from '../compontents/BadgerWidget';
 
 const SignupScreen = () => {
     // firstname , lastname, address, dateofbirth, ssn, email, password
-    const [email, setEmail] = React.useState('jiml@example.com');
-    const [firstname, setFirstname] = React.useState('Jim');
-    const [lastname, setLastname] = React.useState('Lester');
+    const [email, setEmail] = React.useState('user@example.com');
+    const [firstname, setFirstname] = React.useState('user');
+    const [lastname, setLastname] = React.useState('user');
     const [address, setAddress] = React.useState('123 Main St');
     const [dateofbirth, setDateofbirth] = React.useState('1990-01-01');
     const [ssn, setSsn] = React.useState('123-45-6789');
