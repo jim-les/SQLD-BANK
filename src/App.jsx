@@ -12,6 +12,7 @@ import Dashboard from './screens/dashboard/Dashboard';
 import MyBanks from './screens/dashboard/MyBanks';
 import TransactionHistory from './screens/dashboard/TransactionHistory';
 import PaymentTransfer from './screens/dashboard/PaymentTransfer';
+import HomeScreen from './screens/HomeScreen';
 
 const App = () => {
 
@@ -19,8 +20,8 @@ const App = () => {
         <Router>
             <AppProvider>
                 <Routes>
+                    <Route path="/" element={<HomeScreen />} />
                     <Route path="/login" element={<LoginScreen />} />
-                    <Route path="/" element={<LoginScreen />} />
                     <Route path="/signup" element={<SignupScreen />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/My Bank" element={<MyBanks />} />
