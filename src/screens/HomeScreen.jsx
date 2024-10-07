@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, Button, Box, useMediaQuery, IconButton, Drawer, List, ListItem, ListItemText } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, Box, useMediaQuery, IconButton, Drawer, List, ListItem, ListItemText, Grid2 as Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu'; // Hamburger menu icon
 import logo from '../assets/logo.png';
@@ -50,18 +50,20 @@ const HomeScreen = () => {
                     }}
                 >
                     {/* Logo */}
-                    <img src={logo} alt="logo" style={{ width: isMobile ? '70px' : '100px', height: isMobile ? '70px' : '100px' }} />
+                    <Box display="flex" gap={2} alignItems="center">
+                        <img src={logo} alt="logo" style={{ width: isMobile ? '70px' : '100px', height: isMobile ? '70px' : '100px' }} />
 
-                    {/* Title */}
-                    <Typography
-                        variant={isMobile ? 'h5' : 'h3'}
-                        style={{
-                            color: 'black',
-                            fontWeight: '800',
-                        }}
-                    >
-                        SQLD BANK
-                    </Typography>
+                        {/* Title */}
+                        <Typography
+                            variant={isMobile ? 'h5' : 'h3'}
+                            style={{
+                                color: 'black',
+                                fontWeight: '800',
+                            }}
+                        >
+                            SQLD BANK
+                        </Typography>
+                    </Box>
 
                     {/* Show navigation links on large screens */}
                     {!isMobile && (
@@ -91,6 +93,24 @@ const HomeScreen = () => {
             <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
                 {drawer}
             </Drawer>
+
+            {/* Main content */}
+            <Box style={{padding: '20px 10%'}}>
+                <Grid container display={"flex"} alignItems={"center"}>
+                    <Grid item size={6}>
+                        <Typography variant="h1" fontWeight={800} padding={5} color="primary">
+                            Welcome to SQLD <br /> Bank
+                        </Typography>
+
+                        <Typography variant="h4" padding={5}>
+                            <b>Your trusted partner for all your financial needs</b>
+                        </Typography>
+                        <Typography variant="h4" padding={5}>
+                            Your trusted partner for all your financial needs
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </Box>
         </Box>
     );
 }
