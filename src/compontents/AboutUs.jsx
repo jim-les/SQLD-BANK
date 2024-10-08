@@ -1,7 +1,7 @@
 import { Box, Typography, useTheme, useMediaQuery } from '@mui/material';
 import React from 'react';
 import { motion } from 'framer-motion'; // Importing framer-motion
-import AboutUSImage from '../assets/AboutUs.png';
+import AboutUSImage from '../assets/AboutUs.png'; // Importing the image
 
 const AboutUs = () => {
     const theme = useTheme();

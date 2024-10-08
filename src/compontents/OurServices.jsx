@@ -1,6 +1,6 @@
 import { Box, Paper, Typography, useTheme, useMediaQuery } from '@mui/material';
-import React from 'react';
-import { motion } from 'framer-motion'; // Importing framer-motion
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion'; // Import useInView for scroll-based animations
 
 import security from '../assets/Securities.png';
 import insurance from '../assets/Insurance.png';
@@ -9,6 +9,22 @@ import benefits from '../assets/Benefits.png';
 const OurServices = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Detect mobile screen
+
+    // Animation Variants for sliding, fading, zooming, etc.
+    const slideInFromLeft = {
+        hidden: { opacity: 0, x: -100 }, // Start off-screen
+        visible: { opacity: 1, x: 0 }, // End at final position
+    };
+
+    const slideInFromRight = {
+        hidden: { opacity: 0, x: 100 },
+        visible: { opacity: 1, x: 0 },
+    };
+
+    const zoomIn = {
+        hidden: { scale: 0.8, opacity: 0 },
+        visible: { scale: 1, opacity: 1 },
+    };
 
     const Services = [
         {
@@ -36,16 +52,25 @@ const OurServices = () => {
                 borderRadius: 30,
             }}
         >
-            <Typography 
-                variant={isMobile ? 'h4' : 'h2'} 
-                align="center" 
-                color="primary" 
-                fontWeight={800}
+            {/* Title Animation - Sliding in from the Left */}
+            <motion.div
+                initial="hidden"
+                whileInView="visible" // Animation starts when in view
+                viewport={{ once: true, amount: 0.2 }} // Trigger only once when 20% of the element is in view
+                variants={slideInFromLeft}
+                transition={{ duration: 0.8 }} // Smooth sliding effect
             >
-                Our Services
-            </Typography>
+                <Typography 
+                    variant={isMobile ? 'h4' : 'h2'} 
+                    align="center" 
+                    color="primary" 
+                    fontWeight={800}
+                >
+                    Our Services
+                </Typography>
+            </motion.div>
 
-            {/* Flexbox that wraps the services */}
+            {/* Services Cards */}
             <Box 
                 display="flex" 
                 justifyContent="center" 
@@ -53,51 +78,66 @@ const OurServices = () => {
                 paddingTop={10} 
                 flexWrap="wrap"
             >
-                {Services.map((service, index) => (
-                    <motion.div
-                        key={service.title}
-                        initial={{ opacity: 0, y: 50 }} // Initial state
-                        animate={{ opacity: 1, y: 0 }} // Animation when in view
-                        transition={{ duration: 0.5, delay: index * 0.3 }} // Staggered animation
-                        whileHover={{ scale: 1.05 }} // Hover effect
-                        whileTap={{ scale: 0.95 }} // Tap effect for mobile
-                    >
-                        <Paper
-                            elevation={3}
-                            style={{
-                                padding: 20,
-                                width: isMobile ? '280px' : '350px', // Adjust width for mobile
-                                borderRadius: 20,
-                                minHeight: 380,
-                                textAlign: 'center',
-                            }}
+                {Services.map((service, index) => {
+                    const ref = useRef(null);
+                    const inView = useInView(ref, { triggerOnce: true, threshold: 0.2 }); // Trigger when 20% is visible
+
+                    return (
+                        <motion.div
+                            ref={ref} // Attach the ref to monitor this element
+                            key={service.title}
+                            initial="hidden"
+                            animate={inView ? 'visible' : 'hidden'} // Trigger animation when in view
+                            variants={index % 2 === 0 ? slideInFromLeft : slideInFromRight} // Alternating slide directions
+                            transition={{ duration: 0.7, delay: index * 0.2 }} // Staggered animation
+                            whileHover={{ scale: 1.05 }} // Hover effect
+                            whileTap={{ scale: 0.95 }} // Tap effect for mobile
                         >
-                            <img
-                                src={service.image}
-                                alt={service.title}
-                                style={{ 
-                                    width: isMobile ? 150 : 200, // Adjust size for mobile
-                                    height: isMobile ? 150 : 200, 
-                                    borderRadius: '50%', 
-                                    marginBottom: 20 
-                                }}
-                            />
-                            <Typography 
-                                variant={isMobile ? 'h5' : 'h4'} 
-                                color="primary" 
-                                fontWeight={800}
+                            {/* Each service card zooms in */}
+                            <motion.div
+                                initial="hidden"
+                                animate={inView ? 'visible' : 'hidden'} // Zoom effect starts when visible
+                                variants={zoomIn}
+                                transition={{ duration: 0.8 }} // Zoom effect
                             >
-                                {service.title}
-                            </Typography>
-                            <Typography 
-                                variant={isMobile ? 'body2' : 'body1'} 
-                                style={{ padding: isMobile ? '0 10px' : '0' }} // Padding for smaller text on mobile
-                            >
-                                {service.description}
-                            </Typography>
-                        </Paper>
-                    </motion.div>
-                ))}
+                                <Paper
+                                    elevation={3}
+                                    style={{
+                                        padding: 20,
+                                        width: isMobile ? '280px' : '350px', // Adjust width for mobile
+                                        borderRadius: 20,
+                                        minHeight: 380,
+                                        textAlign: 'center',
+                                    }}
+                                >
+                                    <img
+                                        src={service.image}
+                                        alt={service.title}
+                                        style={{ 
+                                            width: isMobile ? 150 : 200, // Adjust size for mobile
+                                            height: isMobile ? 150 : 200, 
+                                            borderRadius: '50%', 
+                                            marginBottom: 20 
+                                        }}
+                                    />
+                                    <Typography 
+                                        variant={isMobile ? 'h5' : 'h4'} 
+                                        color="primary" 
+                                        fontWeight={800}
+                                    >
+                                        {service.title}
+                                    </Typography>
+                                    <Typography 
+                                        variant={isMobile ? 'body2' : 'body1'} 
+                                        style={{ padding: isMobile ? '0 10px' : '0' }} // Padding for smaller text on mobile
+                                    >
+                                        {service.description}
+                                    </Typography>
+                                </Paper>
+                            </motion.div>
+                        </motion.div>
+                    );
+                })}
             </Box>
         </Box>
     );

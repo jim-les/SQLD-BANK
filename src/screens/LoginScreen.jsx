@@ -1,6 +1,5 @@
-// LoginScreen.js
 import React from 'react';
-import { Box, Typography, TextField, Button, CircularProgress } from '@mui/material';
+import { Box, Typography, TextField, Button, CircularProgress, useMediaQuery, useTheme } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 import { Colors } from '../utils';
@@ -9,6 +8,8 @@ import logo from '../assets/logo.png';
 
 const LoginScreen = () => {
     const { username, setUsername, password, setPassword, login, error, loading } = useAppContext();
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Detect mobile screens
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -17,18 +18,20 @@ const LoginScreen = () => {
 
     return (
         <Box>
-            <Grid container>
-                <Grid item xs={5}>
-                    <Box backgroundColor={Colors.lighter} padding={20}>
-                        <Box display={"flex"} alignItems={"center"} paddingBottom={10}
+            <Grid container direction={isMobile ? 'column-reverse' : 'row'}>
+                {/* Left Section (Form) */}
+                <Grid item xs={12} sm={5} md={5}>
+                    <Box backgroundColor={Colors.lighter} padding={isMobile ? 5 : 20} textAlign={isMobile ? 'center' : 'left'}>
+                        <Box display={"flex"} alignItems={"center"} paddingBottom={isMobile ? 5 : 10} justifyContent={isMobile ? 'center' : 'flex-start'}
                             onClick={() => window.location.href = '/'}
                         >
-                            <img src={logo} alt="logo" style={{ width: '100px', height: '100px' }} />
-                            <Typography variant="h1" fontWeight={800} color='primary'>SQLD</Typography>
+                            <img src={logo} alt="logo" style={{ width: '80px', height: '80px' }} />
+                            <Typography variant={isMobile ? "h3" : "h1"} fontWeight={800} color='primary' style={{ marginLeft: isMobile ? 10 : 20 }}>SQLD</Typography>
                         </Box>
+
                         <Typography variant="h4" fontWeight={800} textAlign={'center'}>Log In</Typography>
 
-                        <Typography variant="h6" fontWeight={400} letterSpacing={1} paddingBottom={7} paddingTop={5}> Welcome back! Please enter your details.</Typography>
+                        <Typography variant="h6" fontWeight={400} letterSpacing={1} paddingBottom={5} paddingTop={3}> Welcome back! Please enter your details.</Typography>
 
                         {error && <Typography color="error" variant="body2">{error}</Typography>}
 
@@ -62,23 +65,25 @@ const LoginScreen = () => {
                                 fullWidth 
                                 type="submit" 
                                 disabled={loading} // Disable button while loading
-                                style={{ height: '50px' }}
+                                style={{ height: '50px', marginTop: '20px' }}
                             >
                                 {loading ? <CircularProgress size={24} color="inherit" /> : 'Login'}
                             </Button>
 
-                            <Box display={"flex"} justifyContent={"center"} padding={7} letterSpacing={2}>
-                                <Link to="/forgot-password" style={{ textDecoration: 'none', color: Colors.darker }}> Forgot password? </Link>
-                                <Link to="/signup"> Register</Link>
+                            <Box display={"flex"} justifyContent={"space-between"} padding={7} letterSpacing={2} flexDirection={isMobile ? 'column' : 'row'} alignItems={isMobile ? 'center' : 'flex-start'}>
+                                <Link to="/forgot-password" style={{ textDecoration: 'none', color: Colors.darker, marginBottom: isMobile ? 10 : 0 }}> Forgot password? </Link>
+                                <Link to="/signup" style={{ textDecoration: 'none', color: Colors.darker }}> Register</Link>
                             </Box>
                         </form>
                     </Box>
                 </Grid>
 
-                <Grid item xs={7}>
-                    <Box backgroundColor={Colors.light} width={'100%'} minHeight={'100vh'}>
+                {/* Right Section (Image or Additional Content) */}
+                {/* <Grid item xs={12} sm={7} md={5}>
+                    <Box backgroundColor={Colors.light} width={'100%'} minHeight={isMobile ? '40vh' : '100vh'} display="flex" justifyContent="center" alignItems="center">
+                        <Typography variant="h4" fontWeight={600} color="primary">Welcome to SQLD Bank</Typography>
                     </Box>
-                </Grid>
+                </Grid> */}
             </Grid>
         </Box>
     );
