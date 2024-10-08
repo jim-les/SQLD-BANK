@@ -3,6 +3,7 @@ import { AppBar, Toolbar, Typography, Button, Box, useMediaQuery, IconButton, Dr
 import { useTheme } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu'; // Hamburger menu icon
 import logo from '../assets/logo.png';
+import OurServices from '../compontents/OurServices';
 
 const HomeScreen = () => {
     const theme = useTheme();
@@ -98,19 +99,24 @@ const HomeScreen = () => {
             <Box style={{padding: '20px 10%'}}>
                 <Grid container display={"flex"} alignItems={"center"}>
                     <Grid item size={6}>
-                        <Typography variant="h1" fontWeight={800} padding={5} color="primary">
-                            Welcome to SQLD <br /> Bank
+                        <Typography variant="h1" fontWeight={700} paddingTop={10} color="primary">
+                            Welcome to SQLD Bank
                         </Typography>
 
-                        <Typography variant="h4" padding={5}>
+                        <Typography variant="h4" paddingTop={2}>
                             <b>Your trusted partner for all your financial needs</b>
                         </Typography>
-                        <Typography variant="h4" padding={5}>
-                            Your trusted partner for all your financial needs
+                        <Typography variant="h4" paddingTop={2}>
+                            <i>Join us today and experience the best in banking services.</i>
                         </Typography>
+                        <Button variant="contained" color="primary" size="large" style={{ marginTop: 20, borderRadius: 500, width: '70%', padding: 20, fontSize: 30 }}> Get Started</Button>
                     </Grid>
                 </Grid>
+
+            {/* our Services */}
+            <OurServices />
             </Box>
+
         </Box>
     );
 }
