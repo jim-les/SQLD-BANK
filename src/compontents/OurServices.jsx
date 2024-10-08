@@ -1,4 +1,4 @@
-import { Box, Paper, Typography } from '@mui/material';
+import { Box, Paper, Typography, useTheme, useMediaQuery } from '@mui/material';
 import React from 'react';
 import { motion } from 'framer-motion'; // Importing framer-motion
 
@@ -7,6 +7,9 @@ import insurance from '../assets/Insurance.png';
 import benefits from '../assets/Benefits.png';
 
 const OurServices = () => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Detect mobile screen
+
     const Services = [
         {
             image: security,
@@ -26,17 +29,30 @@ const OurServices = () => {
     ];
 
     return (
-        <Box paddingTop={20}
+        <Box paddingTop={isMobile ? 10 : 20}
             style={{
                 background: 'rgba(255, 255, 255, .5)',
                 paddingBottom: '6%',
                 borderRadius: 30,
             }}
         >
-            <Typography variant="h2" align="center" color="primary" fontWeight={800}>
+            <Typography 
+                variant={isMobile ? 'h4' : 'h2'} 
+                align="center" 
+                color="primary" 
+                fontWeight={800}
+            >
                 Our Services
             </Typography>
-            <Box display="flex" justifyContent="center" gap={10} paddingTop={10} flexWrap="wrap">
+
+            {/* Flexbox that wraps the services */}
+            <Box 
+                display="flex" 
+                justifyContent="center" 
+                gap={isMobile ? 5 : 10} 
+                paddingTop={10} 
+                flexWrap="wrap"
+            >
                 {Services.map((service, index) => (
                     <motion.div
                         key={service.title}
@@ -50,7 +66,7 @@ const OurServices = () => {
                             elevation={3}
                             style={{
                                 padding: 20,
-                                width: '350px',
+                                width: isMobile ? '280px' : '350px', // Adjust width for mobile
                                 borderRadius: 20,
                                 minHeight: 380,
                                 textAlign: 'center',
@@ -59,12 +75,26 @@ const OurServices = () => {
                             <img
                                 src={service.image}
                                 alt={service.title}
-                                style={{ width: 200, height: 200, borderRadius: '50%', marginBottom: 20 }}
+                                style={{ 
+                                    width: isMobile ? 150 : 200, // Adjust size for mobile
+                                    height: isMobile ? 150 : 200, 
+                                    borderRadius: '50%', 
+                                    marginBottom: 20 
+                                }}
                             />
-                            <Typography variant="h4" color="primary" fontWeight={800}>
+                            <Typography 
+                                variant={isMobile ? 'h5' : 'h4'} 
+                                color="primary" 
+                                fontWeight={800}
+                            >
                                 {service.title}
                             </Typography>
-                            <Typography variant="body1">{service.description}</Typography>
+                            <Typography 
+                                variant={isMobile ? 'body2' : 'body1'} 
+                                style={{ padding: isMobile ? '0 10px' : '0' }} // Padding for smaller text on mobile
+                            >
+                                {service.description}
+                            </Typography>
                         </Paper>
                     </motion.div>
                 ))}

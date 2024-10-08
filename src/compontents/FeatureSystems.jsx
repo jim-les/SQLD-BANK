@@ -1,8 +1,11 @@
 import React from 'react';
-import { Box, Typography, Paper } from '@mui/material';
+import { Box, Typography, Paper, useTheme, useMediaQuery } from '@mui/material';
 import { motion } from 'framer-motion';
 
 const FeatureSystems = () => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Detect if the screen is small (mobile)
+
     const features = [
         { title: 'ATM Network', description: 'Access money anytime from our vast ATM network.' },
         { title: 'Mobile Banking', description: 'Secure transactions from your phone.' },
@@ -22,7 +25,7 @@ const FeatureSystems = () => {
                 x: {
                     repeat: Infinity,
                     repeatType: 'loop',
-                    duration: 220, // Control speed of movement
+                    duration: 30, // Control speed of movement
                     ease: 'linear', // Smooth, constant movement
                 },
             },
@@ -31,7 +34,13 @@ const FeatureSystems = () => {
 
     return (
         <Box overflow="hidden" paddingTop={5} position="relative" width="100%" paddingY={10}>
-            <Typography variant="h2" align="center" color="primary" fontWeight={800} paddingY={5}>
+            <Typography 
+                variant={isMobile ? 'h4' : 'h2'} // Adjust typography for mobile
+                align="center" 
+                color="primary" 
+                fontWeight={800} 
+                paddingY={5}
+            >
                 Featured Systems
             </Typography>
             <Box
@@ -39,7 +48,7 @@ const FeatureSystems = () => {
                 variants={containerVariants}
                 animate="animate"
                 display="flex"
-                gap={5}
+                gap={isMobile ? 2 : 5} // Adjust gap based on screen size
                 position="relative"
                 style={{ width: '200%' }} // Ensure space for all cards to slide
             >
@@ -48,23 +57,30 @@ const FeatureSystems = () => {
                         key={index}
                         elevation={3}
                         style={{
-                            padding: '20px',
-                            minWidth: '250px',
+                            padding: isMobile ? '10px' : '20px', // Adjust padding for mobile
+                            minWidth: isMobile ? '150px' : '250px', // Adjust card width for mobile
                             borderRadius: '10px',
                             textAlign: 'center',
                             backgroundColor: '#f5f5f5',
-                            minHeight: 200,
+                            minHeight: isMobile ? 150 : 200, // Adjust height for mobile
                             justifyContent: 'center',
                             alignItems: 'center',
                             display: 'flex',
                         }}
                     >
                         <Box>
-
-                            <Typography variant="h6" color="primary" fontWeight={700}>
+                            <Typography 
+                                variant="h6" 
+                                color="primary" 
+                                fontWeight={700}
+                                style={{ fontSize: isMobile ? '1rem' : '1.25rem' }} // Adjust font size
+                            >
                                 {feature.title}
                             </Typography>
-                            <Typography variant="body1" style={{ marginTop: 10 }}>
+                            <Typography 
+                                variant="body1" 
+                                style={{ marginTop: 10, fontSize: isMobile ? '0.875rem' : '1rem' }} // Adjust font size
+                            >
                                 {feature.description}
                             </Typography>
                         </Box>
