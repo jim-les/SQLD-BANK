@@ -4,7 +4,8 @@ import { useTheme } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu'; // Hamburger menu icon
 import logo from '../assets/logo.png';
 import OurServices from '../compontents/OurServices';
-
+import AboutUs from '../compontents/AboutUs';
+import FeatureSystems from '../compontents/FeatureSystems';
 const HomeScreen = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Detect mobile screen
@@ -115,7 +116,22 @@ const HomeScreen = () => {
 
             {/* our Services */}
             <OurServices />
+
+            {/* About Us */}
+            <AboutUs />
+
             </Box>
+
+            <Box 
+                backgroundColor="#f5f5f5"
+                style={{    
+                    padding: '20px 10%',
+                }}
+            >
+                {/* Featured Systems */}
+                <FeatureSystems />
+            </Box>
+
 
         </Box>
     );
