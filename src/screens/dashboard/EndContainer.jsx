@@ -3,6 +3,7 @@ import { Box, Typography, Button, Paper } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { Wifi } from '@mui/icons-material';
 import { Colors } from '../../utils';
+import { useAppContext } from '../../context/AppContext';
 
 // Define keyframes for jumping animation
 const jumpingAnimation = {
@@ -14,6 +15,7 @@ const jumpingAnimation = {
 };
 
 const EndContainer = () => {
+    const {user} = useAppContext();
     return (
         <Box paddingLeft={5}>
             <Box 
@@ -40,7 +42,7 @@ const EndContainer = () => {
             />
 
             {/* Current user name */}
-            <Typography variant="h5" fontWeight={800} marginTop={5} color={Colors.darker}>John Doe</Typography>
+            <Typography variant="h5" fontWeight={800} marginTop={5} color={Colors.darker}>{user.username}</Typography>
 
             {/* My Bank and add banks btn */}
             <Box display="flex" justifyContent={'space-between'} alignItems="center" gap={2} marginTop={5}>

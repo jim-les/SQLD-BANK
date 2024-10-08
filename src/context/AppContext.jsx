@@ -88,6 +88,7 @@ export const AppProvider = ({ children }) => {
         setIsLoggedIn(false);
         setUser(null);
         handleCheckLogin();
+        navigate('/login');
     }
 
 

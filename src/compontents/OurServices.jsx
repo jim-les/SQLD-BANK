@@ -26,7 +26,13 @@ const OurServices = () => {
     ];
 
     return (
-        <Box paddingTop={20}>
+        <Box paddingTop={20}
+            style={{
+                background: 'rgba(255, 255, 255, .5)',
+                paddingBottom: '6%',
+                borderRadius: 30,
+            }}
+        >
             <Typography variant="h2" align="center" color="primary" fontWeight={800}>
                 Our Services
             </Typography>

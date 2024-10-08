@@ -5,9 +5,11 @@ import Grid from '@mui/material/Grid2';
 import AddIcon from '@mui/icons-material/Add';
 import { Link } from 'react-router-dom';
 import { BorderColor } from '@mui/icons-material';
-
+import { useAppContext } from '../context/AppContext';
 
 const BalanceWidget = () => {
+    const { user } = useAppContext();
+
     return (
         <Paper elevation={3} sx={{ padding: 2, borderRadius: 2 }} BorderColor={'green'}>
             <Grid container>
@@ -25,7 +27,7 @@ const BalanceWidget = () => {
                 <Grid size={6}>
                     <Typography variant="h6" fontWeight={800}>2 Banks Accounts</Typography>
                     <Typography variant="h6" marginTop={5}>Total Current BalanceBalance</Typography>
-                    <Typography variant="h4" fontWeight={800}>$ 4,500.00</Typography>
+                    <Typography variant="h4" fontWeight={800}>$ {user.balance}</Typography>
                 </Grid>
 
                 <Grid size={2}>

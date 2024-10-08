@@ -38,7 +38,7 @@ const SignupScreen = () => {
         <Box>
             <BadgerWidget />
             <Grid container spacing={2} maxHeight={'100vh'} overflow={'hidden'}>
-                <Grid item xs={12} md={5}>
+                <Grid item xs={12} md={6}>
                     <Box 
                         backgroundColor={Colors.light} 
                         paddingLeft={2} 
@@ -170,7 +170,7 @@ const SignupScreen = () => {
                     </Box>
                 </Grid>
 
-                <Grid item xs={12} md={7}>
+                <Grid item xs={12} md={6}>
                     <Box backgroundColor={Colors.light} width={'100%'} minHeight={'100vh'}>
                         <img 
                             src="https://www.shutterstock.com/image-photo/business-financing-accounting-banking-concept-600nw-2267738379.jpg"

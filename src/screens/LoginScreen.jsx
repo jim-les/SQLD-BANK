@@ -20,11 +20,13 @@ const LoginScreen = () => {
             <Grid container>
                 <Grid item xs={5}>
                     <Box backgroundColor={Colors.lighter} padding={20}>
-                        <Box display={"flex"} alignItems={"center"}>
+                        <Box display={"flex"} alignItems={"center"} paddingBottom={10}
+                            onClick={() => window.location.href = '/'}
+                        >
                             <img src={logo} alt="logo" style={{ width: '100px', height: '100px' }} />
-                            <Typography variant="h5" fontWeight={800} color='primary'>SQLD</Typography>
+                            <Typography variant="h1" fontWeight={800} color='primary'>SQLD</Typography>
                         </Box>
-                        <Typography variant="h4" fontWeight={800}>Log In</Typography>
+                        <Typography variant="h4" fontWeight={800} textAlign={'center'}>Log In</Typography>
 
                         <Typography variant="h6" fontWeight={400} letterSpacing={1} paddingBottom={7} paddingTop={5}> Welcome back! Please enter your details.</Typography>
 

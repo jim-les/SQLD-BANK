@@ -9,6 +9,7 @@ import SideBar from './SideBar';
 import MainContent from './MainContent';
 import EndContainer from './EndContainer';
 import { BadgerWidget } from '../../compontents/BadgerWidget';
+
 const Dashboard = () => {
     const [search, setSearch] = React.useState('');
 

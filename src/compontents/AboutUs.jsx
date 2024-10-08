@@ -39,14 +39,19 @@ const AboutUs = () => {
                     initial={{ opacity: 0, x: -50 }} // Fade in from the left
                     animate={{ opacity: 1, x: 0 }} // Slide in animation
                     transition={{ duration: 0.6, delay: 0.2 }} // Smooth transition
+                    style={{display: 'flex', alignItems: 'center'}}
                 >
-                    <Typography variant="h5" color="textSecondary" align="center" fontWeight={500}>
+                    <Typography variant="h5" color="textSecondary" align="center" fontWeight={500} width='50%'>
                         SQLD Bank has been committed to providing unparalleled financial services
                         to individuals and businesses worldwide. Our mission is to help our clients
                         achieve financial success through innovative solutions, robust security, and
                         personalized services. We pride ourselves on creating a welcoming environment
                         where customers feel valued and understood.
                     </Typography>
+
+                    <div style={{width: '50%'}}>
+                        <img src="https://mabreybank.s3.us-west-2.amazonaws.com/wp-content/uploads/2020/02/13202711/banking-illustration-full.svg" alt="" />
+                    </div>
                 </motion.div>
 
                 <motion.div
