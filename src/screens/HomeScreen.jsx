@@ -6,6 +6,7 @@ import logo from '../assets/logo.png';
 import OurServices from '../compontents/OurServices';
 import AboutUs from '../compontents/AboutUs';
 import FeatureSystems from '../compontents/FeatureSystems';
+import Footer from '../compontents/Footer';
 const HomeScreen = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Detect mobile screen
@@ -130,7 +131,12 @@ const HomeScreen = () => {
             >
                 {/* Featured Systems */}
                 <FeatureSystems />
+
+
+
             </Box>
+            {/* Footer */}
+            <Footer />
 
 
         </Box>

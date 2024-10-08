@@ -14,6 +14,8 @@ const Footer = () => {
                 color: 'white',
                 padding: '20px 0',
                 marginTop: 'auto',
+                minHeight: '60vh',
+                paddingTop: '10%',
             }}
         >
             <Box
@@ -24,7 +26,7 @@ const Footer = () => {
                 flexDirection={{ xs: 'column', md: 'row' }} // Stack on small screens
             >
                 {/* Left Section: Company Info */}
-                <Typography variant="h6" fontWeight="bold">
+                <Typography variant="h2" fontWeight="bold">
                     SQLD Bank
                 </Typography>
 
@@ -54,8 +56,8 @@ const Footer = () => {
             </Box>
 
             {/* Bottom Section: Copyright */}
-            <Box textAlign="center" paddingTop="10px">
-                <Typography variant="body2">
+            <Box textAlign="center" paddingTop="5%">
+                <Typography variant="h5">
                     © {new Date().getFullYear()} SQLD Bank. All rights reserved.
                 </Typography>
             </Box>
