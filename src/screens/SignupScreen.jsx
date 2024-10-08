@@ -1,26 +1,26 @@
 import React from 'react';
-import { Box, Typography, TextField, Container, Button } from '@mui/material';
-import Grid from '@mui/material/Grid2';
-// Import components
+import { Box, Typography, TextField, Button, CircularProgress, useMediaQuery, useTheme } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
 import { Colors } from '../utils';
 import { useAppContext } from '../context/AppContext';
-import CircularProgress from '@mui/material/CircularProgress';
 import { BadgerWidget } from '../compontents/BadgerWidget';
+import logo from '../assets/logo.png';
 
 const SignupScreen = () => {
-    // State variables for user details
-    const [email, setEmail] = React.useState('user@example.com');
-    const [firstname, setFirstname] = React.useState('user');
-    const [lastname, setLastname] = React.useState('user');
-    const [address, setAddress] = React.useState('123 Main St');
-    const [dateofbirth, setDateofbirth] = React.useState('1990-01-01');
-    const [ssn, setSsn] = React.useState('123-45-6789');
-    const [password, setPassword] = React.useState('password123'); // Example default password
+    const [email, setEmail] = React.useState('');
+    const [firstname, setFirstname] = React.useState('');
+    const [lastname, setLastname] = React.useState('');
+    const [address, setAddress] = React.useState('');
+    const [dateofbirth, setDateofbirth] = React.useState('');
+    const [ssn, setSsn] = React.useState('');
+    const [password, setPassword] = React.useState('');
     const { Signup, error, loading } = useAppContext();
-
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Detect mobile screens
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent default form submission
+
+        e.preventDefault();
         const data = {
             username: firstname,
             email,
@@ -32,24 +32,30 @@ const SignupScreen = () => {
             ssn
         };
         Signup(data);
-    }
+    };
 
     return (
         <Box>
             <BadgerWidget />
-            <Grid container spacing={2} maxHeight={'100vh'} overflow={'hidden'}>
+            <Grid container spacing={2} height='100vh'>
                 <Grid item xs={12} md={6}>
                     <Box 
                         backgroundColor={Colors.light} 
-                        paddingLeft={2} 
-                        paddingRight={2} 
+                        padding={2} 
                         paddingTop={5} 
-                        overflow={'scroll'} 
-                        height={'100vh'}
+                        height='100vh'
+                        display="flex"
+                        flexDirection="column"
+                        justifyContent="center"
                     >
-                        <Typography variant="h5" fontWeight={800} paddingBottom={5} color='primary'>SQLD</Typography>
+                        <Box display={"flex"} alignItems={"center"} paddingBottom={isMobile ? 5 : 10} justifyContent={isMobile ? 'center' : 'flex-start'}
+                            onClick={() => window.location.href = '/'}
+                        >
+                            <img src={logo} alt="logo" style={{ width: '80px', height: '80px' }} />
+                            <Typography variant={isMobile ? "h3" : "h1"} fontWeight={800} color='primary' style={{ marginLeft: isMobile ? 10 : 20 }}>SQLD</Typography>
+                        </Box>
                         <Typography variant="h4" fontWeight={800}>Sign up</Typography>
-                        <Typography variant="h6" fontWeight={400} paddingBottom={2} paddingTop={2} letterSpacing={2}>
+                        <Typography variant="h6" fontWeight={400} paddingBottom={2} letterSpacing={1}>
                             Please Enter Your details
                         </Typography>
 
@@ -58,7 +64,6 @@ const SignupScreen = () => {
                         <form onSubmit={handleSubmit}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} md={6}>
-                                    <Typography variant="h6" fontWeight={800}>First Name</Typography>
                                     <TextField
                                         label="First Name"
                                         variant="outlined"
@@ -69,9 +74,7 @@ const SignupScreen = () => {
                                         onChange={(e) => setFirstname(e.target.value)}
                                     />
                                 </Grid>
-
                                 <Grid item xs={12} md={6}>
-                                    <Typography variant="h6" fontWeight={800}>Last Name</Typography>
                                     <TextField
                                         label="Last Name"
                                         variant="outlined"
@@ -84,8 +87,6 @@ const SignupScreen = () => {
                                 </Grid>
                             </Grid>
 
-                            {/* Address */}
-                            <Typography variant="h6" fontWeight={800}>Address</Typography>
                             <TextField
                                 label="Address"
                                 variant="outlined"
@@ -96,10 +97,8 @@ const SignupScreen = () => {
                                 onChange={(e) => setAddress(e.target.value)}
                             />
 
-                            {/* Date of Birth and SSN */}
                             <Grid container spacing={2}>
                                 <Grid item xs={12} md={6}>
-                                    <Typography variant="h6" fontWeight={800}>Date of Birth</Typography>
                                     <TextField
                                         label="Date of Birth"
                                         variant="outlined"
@@ -110,9 +109,7 @@ const SignupScreen = () => {
                                         onChange={(e) => setDateofbirth(e.target.value)}
                                     />
                                 </Grid>
-
                                 <Grid item xs={12} md={6}>
-                                    <Typography variant="h6" fontWeight={800}>SSN</Typography>
                                     <TextField
                                         label="SSN"
                                         variant="outlined"
@@ -125,8 +122,6 @@ const SignupScreen = () => {
                                 </Grid>
                             </Grid>
 
-                            {/* Email and Password */}
-                            <Typography variant="h6" fontWeight={800}>Email</Typography>
                             <TextField
                                 label="Email"
                                 variant="outlined"
@@ -137,7 +132,6 @@ const SignupScreen = () => {
                                 onChange={(e) => setEmail(e.target.value)}
                             />
 
-                            <Typography variant="h6" fontWeight={800}>Password</Typography>
                             <TextField
                                 label="Password"
                                 variant="outlined"
@@ -148,22 +142,20 @@ const SignupScreen = () => {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
-                            <br />
-                            <br />
+
                             <Button 
                                 variant="contained" 
                                 color="primary" 
                                 fullWidth 
                                 type="submit" 
-                                disabled={loading} // Disable button while loading
-                                style={{ height: '50px' }}
+                                disabled={loading}
+                                style={{ height: '50px', marginTop: 2 }}
                             >
                                 {loading ? <CircularProgress size={24} color="inherit" /> : 'Sign Up'}
                             </Button>
                         </form>
 
-                        {/* Forgot password */}
-                        <Box display={"flex"} justifyContent={"center"} padding={1} letterSpacing={2}>
+                        <Box display="flex" justifyContent="center" paddingTop={2}>
                             <Typography>Already have an account? </Typography>
                             <Link to="/login"> Login</Link>
                         </Box>
@@ -171,10 +163,10 @@ const SignupScreen = () => {
                 </Grid>
 
                 <Grid item xs={12} md={6}>
-                    <Box backgroundColor={Colors.light} width={'100%'} minHeight={'100vh'}>
+                    <Box backgroundColor={Colors.light} width='100%' height='100vh'>
                         <img 
                             src="https://www.shutterstock.com/image-photo/business-financing-accounting-banking-concept-600nw-2267738379.jpg"
-                            style={{ width: '100%', minHeight: '100vh', objectFit: 'cover' }}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             alt="Signup Background" 
                         />
                     </Box>
