@@ -19,8 +19,8 @@ export const AppProvider = ({ children }) => {
         setIsBankCardOpen(!isBankCardOpen);
     };
 
-    const baseUrl = 'https://sqld-backend.onrender.com/api';
-    // const baseUrl = 'http://localhost:5000/api';
+    // const baseUrl = 'https://sqld-backend.onrender.com/api';
+    const baseUrl = 'http://localhost:5000/api';
     const navigate = useNavigate();
 
     // useEffect to check if user is already logged in else redirect to login page
@@ -56,7 +56,13 @@ export const AppProvider = ({ children }) => {
             setMessage('Success Login');
             handleCheckLogin();
         } catch (err) {
-            setError(err.message);
+            if (err.response && err.response.data) {
+                // If the error is from the backend, use the error message from the response
+                setError(err.response.data.message || 'An error occurred');
+            } else {
+                // If the error is not from the backend, show a generic error message
+                setError('Something went wrong');
+            }
         } finally {
             setLoading(false); // End loading
         }
@@ -93,7 +99,7 @@ export const AppProvider = ({ children }) => {
 
 
     return (
-        <AppContext.Provider value={{ username, setUsername, password, setPassword, login, error, loading, logout, user, Signup, open, setOpen, message, setMessage, isBankCardOpen, toggleSidebar }}>
+        <AppContext.Provider value={{baseUrl, username, setUsername, password, setPassword, login, error, loading, logout, user, Signup, open, setOpen, message, setMessage, isBankCardOpen, toggleSidebar }}>
             {children}
         </AppContext.Provider>
     );

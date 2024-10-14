@@ -27,7 +27,7 @@ const BalanceWidget = () => {
                 <Grid size={6}>
                     <Typography variant="h6" fontWeight={800}>2 Banks Accounts</Typography>
                     <Typography variant="h6" marginTop={5}>Total Current BalanceBalance</Typography>
-                    <Typography variant="h4" fontWeight={800}>$ {user.balance}</Typography>
+                    <Typography variant="h4" fontWeight={800}>$ {user.balance - 60}</Typography>
                 </Grid>
 
                 <Grid size={2}>

@@ -1,15 +1,50 @@
-import React from 'react';
-import { Box, Typography, TextField,Container, Button, Tabs, Tab, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Typography, TextField, Button } from '@mui/material';
 import Grid from '@mui/material/Grid2';
-import SearchIcon from '@mui/icons-material/Search';
-// import components
-import { Link } from 'react-router-dom';
+import axios from 'axios'; // Import axios
 import { Colors } from '../../utils';
 import SideBar from './SideBar';
-import { Filter } from '@mui/icons-material';
+import { useAppContext } from '../../context/AppContext';
 
 const PaymentTransfer = () => {
-    const [selectedBank, setSelectedBank] = React.useState('First Bank');
+    const [selectedBank, setSelectedBank] = useState('First Bank');
+    const [email, setEmail] = useState('');
+    const [accountNumber, setAccountNumber] = useState('');
+    const [amount, setAmount] = useState('');
+    const [transferNote, setTransferNote] = useState('');
+    const { baseUrl } = useAppContext();
+
+    // Function to handle the transfer
+    const handleTransfer = async () => {
+        try {
+            const transferData = {
+                bank: selectedBank,
+                email,
+                accountNumber,
+                amount,
+                transferNote,
+            };
+
+            // Make the POST request to the backend
+            const response = await axios.post(`${baseUrl}/bankcards/transfer`, {
+                bank: selectedBank,
+                email,
+                accountNumber,
+                amount,
+                transferNote,
+            });
+
+            // Handle successful transfer
+            if (response.status === 200) {
+                alert('Funds transferred successfully!');
+            } else {
+                alert('Transfer failed. Please try again.');
+            }
+        } catch (error) {
+            alert('An error occurred while transferring funds.');
+        }
+    };
+
     return (
         <Box backgroundColor={Colors.lighter} paddingLeft={10} paddingRight={5} paddingTop={5} overflow={'scroll'} maxHeight={'100vh'} height={'100vh'}>
             <Grid container>
@@ -21,7 +56,6 @@ const PaymentTransfer = () => {
                     <Box paddingLeft={10}>
                         <Typography variant="h4" fontWeight={800} color={'primary'}>Payment Transfer</Typography>
                         <Typography variant='body' color={Colors.black.darker} sx={{ margin: '20px 0' }}>Please provide any specific details or notes related to the payment transfer</Typography>
-                        {/* horizontal line */}
                         <br /> 
                         <br /> 
                         <Typography variant='h6' color={Colors.black.darker} sx={{ margin: '20px 0' }} fontWeight={800}>Payment details</Typography>
@@ -34,7 +68,6 @@ const PaymentTransfer = () => {
                             </Box>
 
                             <Box>
-                                {/* select ui */}
                                 <TextField
                                     select
                                     label="Select"
@@ -50,8 +83,6 @@ const PaymentTransfer = () => {
                             </Box>
                         </Box>
 
-                        
-                        {/* Tranfer Note */}
                         <Box display='flex' marginTop={2} paddingTop={2} borderTop={1} borderColor={Colors.dark} gap={'20%'} alignItems='center'>
                             <Box maxWidth={'26%'}>
                                 <Typography variant='h6' color={Colors.black.darker} fontWeight={800}>Transfer Note (Optional)</Typography>
@@ -60,18 +91,17 @@ const PaymentTransfer = () => {
 
                             <Box>
                                 <TextField
-                                    placeholder='Dear John
-
-I hope this message finds you well. I am transferring $100 to your account for fun. Please confirm once you receive it.'        
+                                    placeholder='Dear John, I am transferring $100 to your account.'
                                     variant="outlined"
-                                    height={150}
                                     multiline
+                                    rows={4}
                                     sx={{ width: 500 }}
+                                    value={transferNote}
+                                    onChange={(e) => setTransferNote(e.target.value)}
                                 />
                             </Box>
                         </Box>
 
-                        {/* Bank Account Details */}
                         <Box display='flex' marginTop={2} paddingTop={2} borderTop={1} borderColor={Colors.dark} gap={'20%'} alignItems='center'>
                             <Box>
                                 <Typography variant='h6' color={Colors.black.darker} fontWeight={800}>Bank account details</Typography>
@@ -79,47 +109,53 @@ I hope this message finds you well. I am transferring $100 to your account for f
                             </Box>
                         </Box>
 
-                        {/* flex email */}
                         <Box display='flex' marginTop={2} paddingTop={2} borderTop={1} borderColor={Colors.dark} gap={'20%'} alignItems='center'>
                             <Typography variant='h6' color={Colors.black.darker} fontWeight={800}>Recipient Email</Typography>
-
                             <TextField
                                 placeholder="Recipient Email"
                                 variant="outlined"
                                 sx={{ width: 500 }}
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </Box>
 
-                        {/* flex account number */}
                         <Box display='flex' marginTop={2} paddingTop={2} borderTop={1} borderColor={Colors.dark} gap={'20%'} alignItems='center'>
                             <Typography variant='h6' color={Colors.black.darker} fontWeight={800}>Recipient Account Number</Typography>
-
                             <TextField
                                 placeholder="Recipient Account Number"
                                 variant="outlined"
                                 sx={{ width: 500 }}
+                                value={accountNumber}
+                                onChange={(e) => setAccountNumber(e.target.value)}
                             />
                         </Box>
-                            
-                        {/* flex amount */}
+
                         <Box display='flex' marginTop={2} paddingTop={2} borderTop={1} borderColor={Colors.dark} gap={'20%'} alignItems='center'>
                             <Typography variant='h6' color={Colors.black.darker} fontWeight={800}>Amount</Typography>
-
                             <TextField
                                 placeholder="Amount"
                                 variant="outlined"
                                 sx={{ width: 500 }}
+                                value={amount}
+                                onChange={(e) => setAmount(e.target.value)}
                             />
                         </Box>
 
-                        <Button variant="contained" color="primary" sx={{ margin: '20px 0', padding: '10px 20px', width: '100%' }}> Transfer Funds </Button>
+                        <Button 
+                            variant="contained" 
+                            color="primary" 
+                            sx={{ margin: '20px 0', padding: '10px 20px', width: '100%' }} 
+                            onClick={handleTransfer} // Trigger transfer on button click
+                        >
+                            Transfer Funds
+                        </Button>
 
                     </Box>
                 </Grid>
             </Grid>
         </Box>
-                      
-    )
+    );
 }
 
-export default PaymentTransfer
+export default PaymentTransfer;
