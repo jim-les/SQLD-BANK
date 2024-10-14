@@ -1,7 +1,7 @@
-import React from 'react';
-import { Box, Typography, Button, Paper } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Typography, Button, Paper, IconButton, Drawer } from '@mui/material';
 import Grid from '@mui/material/Grid2';
-import { Wifi } from '@mui/icons-material';
+import { Wifi, Notifications } from '@mui/icons-material';
 import { Colors } from '../../utils';
 import { useAppContext } from '../../context/AppContext';
 
@@ -15,9 +15,42 @@ const jumpingAnimation = {
 };
 
 const EndContainer = () => {
-    const {user} = useAppContext();
+    const { user } = useAppContext();
+    
+    // State to control the drawer visibility
+    const [drawerOpen, setDrawerOpen] = useState(false);
+
+    // Toggle drawer
+    const toggleDrawer = (open) => () => {
+        setDrawerOpen(open);
+    };
+
     return (
         <Box paddingLeft={5}>
+
+            {/* Notification Icon */}
+            <Box display="flex" justifyContent="flex-end" padding={2}>
+                <IconButton onClick={toggleDrawer(true)} aria-label="notifications">
+                    <Notifications fontSize="large" />
+                </IconButton>
+            </Box>
+
+            {/* Drawer to show notification message */}
+            <Drawer
+                anchor="right"
+                open={drawerOpen}
+                onClose={toggleDrawer(false)}
+            >
+                <Box padding={2} width={300}>
+                    <Typography variant="h6" fontWeight="bold">Notification</Typography>
+                    <Typography variant="body1" marginTop={2}>
+                        Your account has been deactivated for malicious activities.
+                        <br />
+                        Please visit the nearest branch for more information.
+                    </Typography>
+                </Box>
+            </Drawer>
+
             <Box 
                 sx={{
                     background: 'linear-gradient(to bottom right, aqua 0%, pink 60%)',
